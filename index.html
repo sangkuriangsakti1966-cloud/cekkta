@@ -3,398 +3,1054 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistem CEK KTA</title>
+<title>Sistem CEK KTA - Sangkuriang Sakti</title>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>emailjs.init("Z7j7Pj2NrNhMcpLnd")</script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
+
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#f0f4f8}
-.header{background:linear-gradient(135deg,#1976D2,#42A5F5);color:white;padding:20px;text-align:center}
-.header h1{font-size:20px}
-.nav{display:flex;background:white;box-shadow:0 1px 4px rgba(0,0,0,0.1)}
-.nav button{flex:1;padding:12px;border:none;background:white;font-size:12px;cursor:pointer;border-bottom:3px solid transparent}
-.nav button.active{border-bottom-color:#1976D2;color:#1976D2;font-weight:bold}
-.page{display:none;padding:16px}
-.page.active{display:block}
-.card{background:white;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.card h2{font-size:16px;margin-bottom:12px;color:#1976D2}
-input,select{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-size:15px;margin-bottom:10px;outline:none}
-input:focus{border-color:#1976D2}
-.btn{width:100%;padding:14px;border:none;border-radius:8px;font-size:15px;font-weight:bold;cursor:pointer;margin-bottom:8px}
-.btn-blue{background:#1976D2;color:white}
-.btn-green{background:#43A047;color:white}
-.btn-red{background:#E53935;color:white}
-.btn-gray{background:#757575;color:white}
-.btn-purple{background:#7B1FA2;color:white}
-.result{padding:16px;border-radius:8px;margin-top:12px;text-align:center;font-size:14px;line-height:1.6;display:none}
-.result.berhasil{background:#E8F5E9;color:#2E7D32;border:2px solid #43A047}
-.result.gagal{background:#FFEBEE;color:#C62828;border:2px solid #E53935}
-.result.info{background:#E3F2FD;color:#1565C0;border:2px solid #1976D2}
-.anggota-card{background:white;border-radius:10px;padding:12px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.1);display:flex;align-items:center;gap:12px}
-.foto-kecil{width:55px;height:55px;border-radius:50%;object-fit:cover}
-.admin-badge{background:#E8F5E9;color:#2E7D32;padding:8px 16px;border-radius:20px;text-align:center;margin-bottom:12px;font-weight:bold;font-size:13px}
-.log-item{font-size:11px;padding:6px;border-bottom:1px solid #f0f0f0;color:#555}
+
+:root {
+  --ungu: #4A1A7A;
+  --ungu-muda: #7B2FBE;
+  --ungu-terang: #9C4FD4;
+  --kuning: #F5A800;
+  --kuning-muda: #FFD060;
+  --merah: #C0152A;
+  --hijau: #1A7A3A;
+  --putih: #FFFFFF;
+  --abu-terang: #F5F0FF;
+  --abu: #E8E0F0;
+  --teks-gelap: #1A0A2E;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #F5F0FF;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--ungu) 0%, var(--ungu-muda) 60%, var(--merah) 100%);
+  padding: 20px 16px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(74,26,122,0.4);
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -30px; left: -30px;
+  width: 120px; height: 120px;
+  background: rgba(245,168,0,0.15);
+  border-radius: 50%;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -20px; right: -20px;
+  width: 80px; height: 80px;
+  background: rgba(192,21,42,0.2);
+  border-radius: 50%;
+}
+.header-logo {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 8px;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+.header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--kuning);
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 1;
+}
+.header p {
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 2px;
+  position: relative;
+  z-index: 1;
+}
+.header-garis {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--kuning), transparent);
+  margin: 8px auto 0;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  background: var(--ungu);
+  box-shadow: 0 2px 8px rgba(74,26,122,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav button {
+  flex: 1;
+  padding: 12px 4px;
+  border: none;
+  background: transparent;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+.nav button.active {
+  border-bottom-color: var(--kuning);
+  color: var(--kuning);
+}
+.nav button:hover { color: var(--kuning-muda); }
+
+/* PAGES */
+.page { display: none; padding: 16px; }
+.page.active { display: block; }
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(74,26,122,0.08);
+  border: 1px solid rgba(74,26,122,0.06);
+}
+.card h2 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--ungu);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--abu), transparent);
+}
+
+/* INPUT */
+input, select, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--abu);
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  margin-bottom: 10px;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #FDFCFF;
+  color: var(--teks-gelap);
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--ungu-muda);
+  background: white;
+}
+
+/* TOMBOL */
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+.btn:active { transform: scale(0.98); }
+.btn-ungu {
+  background: linear-gradient(135deg, var(--ungu), var(--ungu-muda));
+  color: white;
+  box-shadow: 0 4px 12px rgba(74,26,122,0.3);
+}
+.btn-kuning {
+  background: linear-gradient(135deg, var(--kuning), var(--kuning-muda));
+  color: var(--teks-gelap);
+  box-shadow: 0 4px 12px rgba(245,168,0,0.3);
+}
+.btn-merah {
+  background: linear-gradient(135deg, var(--merah), #E53935);
+  color: white;
+  box-shadow: 0 4px 12px rgba(192,21,42,0.3);
+}
+.btn-hijau {
+  background: linear-gradient(135deg, var(--hijau), #43A047);
+  color: white;
+  box-shadow: 0 4px 12px rgba(26,122,58,0.3);
+}
+.btn-abu {
+  background: #757575;
+  color: white;
+}
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--ungu-muda);
+  color: var(--ungu-muda);
+}
+
+/* RESULT */
+.result {
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+  display: none;
+}
+.result.berhasil {
+  background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+  color: #1B5E20;
+  border: 2px solid #43A047;
+}
+.result.gagal {
+  background: linear-gradient(135deg, #FFEBEE, #FCE4EC);
+  color: #B71C1C;
+  border: 2px solid #E53935;
+}
+.result.info {
+  background: linear-gradient(135deg, #EDE7F6, #F3E5F5);
+  color: var(--ungu);
+  border: 2px solid var(--ungu-muda);
+}
+
+/* KTA DIGITAL - hasil verifikasi */
+.kta-digital {
+  display: none;
+  background: linear-gradient(135deg, var(--ungu) 0%, var(--ungu-muda) 50%, var(--merah) 100%);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 16px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(74,26,122,0.4);
+  position: relative;
+  overflow: hidden;
+}
+.kta-digital::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 120px; height: 120px;
+  background: rgba(245,168,0,0.15);
+  border-radius: 50%;
+}
+.kta-digital::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; left: -30px;
+  width: 90px; height: 90px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+}
+.kta-header {
+  text-align: center;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+.kta-header p {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--kuning);
+  font-weight: 700;
+}
+.kta-header h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 900;
+  color: white;
+  margin-top: 2px;
+}
+.kta-garis {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--kuning), transparent);
+  margin: 10px 0;
+}
+.kta-body {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.kta-foto-wrap {
+  flex-shrink: 0;
+}
+.kta-foto-hex {
+  width: 80px;
+  height: 80px;
+  background: var(--merah);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px solid var(--kuning);
+}
+.kta-foto-hex img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.kta-foto-hex .no-foto {
+  font-size: 32px;
+}
+.kta-info { flex: 1; }
+.kta-nama {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  margin-bottom: 8px;
+}
+.kta-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+.kta-label {
+  color: var(--kuning-muda);
+  font-weight: 600;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.kta-value {
+  color: rgba(255,255,255,0.9);
+}
+.kta-nomor {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 1;
+}
+.kta-nomor span {
+  color: var(--kuning);
+  font-weight: 700;
+  font-size: 13px;
+}
+.kta-valid-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid var(--kuning);
+  color: var(--kuning);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+/* LIST ANGGOTA */
+.anggota-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(74,26,122,0.08);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 4px solid var(--ungu-muda);
+}
+.foto-hex-kecil {
+  width: 52px;
+  height: 52px;
+  background: var(--merah);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.foto-hex-kecil img { width: 100%; height: 100%; object-fit: cover; }
+.foto-hex-kecil .emoji { font-size: 22px; }
+.anggota-nama { font-weight: 700; font-size: 13px; color: var(--teks-gelap); }
+.anggota-info { font-size: 11px; color: #777; margin-top: 2px; }
+
+/* ADMIN BADGE */
+.admin-badge {
+  background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+  color: var(--hijau);
+  padding: 10px 16px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 14px;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid #43A047;
+}
+
+/* LOG */
+.log-item {
+  font-size: 11px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+}
+
+/* LOADING */
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--ungu-muda);
+  font-size: 13px;
+}
+.spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--abu);
+  border-top-color: var(--ungu-muda);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* AKSES DITOLAK */
+.akses-ditolak {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+.akses-ditolak .icon { font-size: 48px; margin-bottom: 12px; }
+.akses-ditolak p { font-size: 14px; }
+
+/* IMPORT CSV */
+.import-box {
+  border: 2px dashed var(--ungu-muda);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+  background: #FDFCFF;
+  cursor: pointer;
+}
+.import-box:hover { background: #F5F0FF; }
+.import-box p { font-size: 13px; color: var(--ungu-muda); font-weight: 600; }
+.import-box small { font-size: 11px; color: #999; }
+
+/* PREVIEW FOTO */
+#preview-foto {
+  width: 100px;
+  height: 100px;
+  background: var(--merah);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: none;
+  margin: 10px auto;
+  overflow: hidden;
+}
+#preview-foto img { width: 100%; height: 100%; object-fit: cover; }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
-    <h1>🪪 SISTEM CEK KTA</h1>
-    <p>Kartu Tanda Anggota</p>
+  <img class="header-logo" src="https://sangkuriangsakti1966-cloud.github.io/cekkta/Photoroom-20260611_000250018 (1).png" onerror="this.style.display='none'" alt="Logo">
+  <h1>⚔️ SANGKURIANG SAKTI</h1>
+  <p>Sistem Verifikasi KTA Digital</p>
+  <div class="header-garis"></div>
 </div>
 
+<!-- NAV -->
 <div class="nav">
-    <button class="active" onclick="showPage('cek',this)">🔍 Cek KTA</button>
-    <button onclick="showPage('list',this)">📋 Anggota</button>
-    <button onclick="showPage('admin',this)">🔐 Admin</button>
+  <button class="active" onclick="showPage('cek',this)">🔍 Cek KTA</button>
+  <button onclick="showPage('list',this)">📋 Anggota</button>
+  <button onclick="showPage('admin',this)">🔐 Admin</button>
 </div>
 
 <!-- CEK KTA -->
 <div id="page-cek" class="page active">
-    <div class="card">
-        <h2>🔍 Verifikasi Nomor KTA</h2>
-        <input type="number" id="input-kta" placeholder="Masukkan 15 digit KTA" oninput="limitInput(this,15)">
-
-        <button class="btn btn-blue" onclick="verifikasiKTA()">🔍 VERIFIKASI</button>
-        <div style="text-align:center;margin-top:10px;">
-            <img id="foto-hasil" src="" style="display:none;width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #43A047;">
+  <div class="card">
+    <h2>🔍 Verifikasi KTA</h2>
+    <input type="number" id="input-kta" placeholder="Masukkan 15 digit nomor KTA" oninput="limitInput(this,15)">
+    <button class="btn btn-ungu" onclick="verifikasiKTA()">🔍 VERIFIKASI SEKARANG</button>
+    <div id="hasil-cek" class="result"></div>
+    <!-- KTA DIGITAL -->
+    <div class="kta-digital" id="kta-digital">
+      <div class="kta-header">
+        <p>PERGURUAN PENCAK SILAT</p>
+        <h3>SANGKURIANG SAKTI</h3>
+        <p style="font-size:9px;letter-spacing:2px;margin-top:2px;">ASAH · ASIH · ASUH</p>
+      </div>
+      <div class="kta-garis"></div>
+      <div class="kta-body">
+        <div class="kta-foto-wrap">
+          <div class="kta-foto-hex" id="kta-foto-hex">
+            <span class="no-foto">👤</span>
+          </div>
         </div>
-        <div id="hasil-cek" class="result"></div>
+        <div class="kta-info">
+          <div class="kta-nama" id="kta-nama-hasil">-</div>
+          <div class="kta-row"><span class="kta-label">Tgl. Lahir</span><span class="kta-value" id="kta-tgl-hasil">-</span></div>
+          <div class="kta-row"><span class="kta-label">Thn. Baiat</span><span class="kta-value" id="kta-baiat-hasil">-</span></div>
+          <div class="kta-row"><span class="kta-label">Domisili</span><span class="kta-value" id="kta-domisili-hasil">-</span></div>
+          <div class="kta-row"><span class="kta-label">Alamat</span><span class="kta-value" id="kta-alamat-hasil">-</span></div>
+        </div>
+      </div>
+      <div class="kta-garis"></div>
+      <div class="kta-nomor">No. KTA: <span id="kta-nomor-hasil">-</span></div>
+      <div style="text-align:center;position:relative;z-index:1;">
+        <span class="kta-valid-badge">✅ ANGGOTA TERVERIFIKASI</span>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- LIST -->
+<!-- LIST ANGGOTA -->
 <div id="page-list" class="page">
+  <div id="list-akses-ditolak" class="akses-ditolak" style="display:none;">
+    <div class="icon">🔒</div>
+    <p><strong>Akses Ditolak</strong><br>Login sebagai admin untuk melihat daftar anggota</p>
+  </div>
+  <div id="list-konten" style="display:none;">
     <div class="card">
-        <h2>📋 Daftar Semua Anggota</h2>
-        <div id="list-anggota"><p style="color:#999;text-align:center;">Belum ada anggota.</p></div>
+      <h2>📋 Daftar Semua Anggota</h2>
+      <div id="list-anggota"><div class="loading"><div class="spinner"></div><br>Memuat data...</div></div>
     </div>
+  </div>
 </div>
 
 <!-- ADMIN -->
 <div id="page-admin" class="page">
-    <div id="form-login" class="card">
-        <h2>🔐 Login Admin</h2>
-        <input type="password" id="input-pass" placeholder="Password Admin">
-        <input type="number" id="input-otp" placeholder="Kode OTP (setelah klik Kirim OTP)" oninput="limitInput(this,6)">
-        <button class="btn btn-blue" onclick="kirimOTP()">📧 Kirim OTP ke Gmail</button>
-        <button class="btn btn-green" onclick="loginAdmin()">🔓 LOGIN</button>
-        <div id="hasil-login" class="result"></div>
+  <div id="form-login" class="card">
+    <h2>🔐 Login Admin</h2>
+    <input type="password" id="input-pass" placeholder="Password Admin">
+    <input type="number" id="input-otp" placeholder="Kode OTP (setelah klik Kirim OTP)" oninput="limitInput(this,6)">
+    <button class="btn btn-ungu" onclick="kirimOTP()">📧 Kirim OTP ke Gmail</button>
+    <button class="btn btn-kuning" onclick="loginAdmin()">🔓 LOGIN</button>
+    <div id="hasil-login" class="result"></div>
+  </div>
+
+  <div id="menu-admin" style="display:none">
+    <div class="admin-badge">👑 Mode Admin Aktif — Sangkuriang Sakti</div>
+
+    <!-- TAMBAH ANGGOTA -->
+    <div class="card">
+      <h2>➕ Tambah Anggota</h2>
+      <input type="number" id="tambah-kta" placeholder="Nomor KTA (15 digit)" oninput="limitInput(this,15)">
+      <input type="text" id="tambah-nama" placeholder="Nama Lengkap">
+      <input type="text" id="tambah-tgl" placeholder="Tanggal Lahir (DD/MM/YY) contoh: 28/02/10">
+      <input type="number" id="tambah-baiat" placeholder="Tahun Baiat (contoh: 2024)" oninput="limitInput(this,4)">
+      <input type="text" id="tambah-domisili" placeholder="Domisili (contoh: Way Kanan)">
+      <input type="text" id="tambah-alamat" placeholder="Alamat Lengkap">
+      <button class="btn btn-hijau" onclick="tambahAnggota()">💾 SIMPAN ANGGOTA</button>
+      <div id="hasil-tambah" class="result"></div>
     </div>
 
-    <div id="menu-admin" style="display:none">
-        <div class="admin-badge">👑 Mode Admin Aktif</div>
-
-        <div class="card">
-            <h2>➕ Tambah Anggota</h2>
-            <input type="number" id="tambah-kta" placeholder="Nomor KTA (15 digit)" oninput="limitInput(this,15)">
-            <input type="text" id="tambah-nama" placeholder="Nama Lengkap">
-            <button class="btn btn-green" onclick="tambahAnggota()">💾 SIMPAN</button>
-            <div id="hasil-tambah" class="result"></div>
-        </div>
-
-        <div class="card">
-            <h2>📸 Kelola Foto</h2>
-            <input type="number" id="foto-kta" placeholder="Nomor KTA" oninput="limitInput(this,15)">
-            <button class="btn btn-blue" onclick="cariFoto()">🔍 Cari Anggota</button>
-            <div id="info-foto" style="display:none;text-align:center;">
-                <p id="nama-foto" style="font-weight:bold;margin:8px 0;"></p>
-                <img id="preview-foto" src="" style="display:none;width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid #1976D2;margin:10px auto;display:block;">
-                <p id="no-foto" style="color:#999;font-size:13px;">Belum ada foto</p>
-                <input type="file" id="input-foto" accept="image/*" style="display:none;" onchange="uploadFoto(event)">
-                <button class="btn btn-blue" style="margin-top:8px;" onclick="document.getElementById('input-foto').click()">🖼️ Pilih Foto dari Galeri</button>
-            </div>
-            <div id="hasil-foto" class="result"></div>
-        </div>
-
-        <div class="card">
-            <h2>🗑️ Hapus Anggota</h2>
-            <input type="number" id="hapus-kta" placeholder="Nomor KTA yang dihapus" oninput="limitInput(this,15)">
-            <button class="btn btn-red" onclick="hapusAnggota()">🗑️ HAPUS</button>
-            <div id="hasil-hapus" class="result"></div>
-        </div>
-
-        <div class="card">
-            <h2>🔑 Ganti Password</h2>
-            <input type="password" id="pass-lama" placeholder="Password Lama">
-            <input type="password" id="pass-baru" placeholder="Password Baru (min 6 karakter)">
-            <input type="password" id="pass-konfirm" placeholder="Konfirmasi Password Baru">
-            <button class="btn btn-purple" onclick="gantiPassword()">💾 SIMPAN</button>
-            <div id="hasil-pass" class="result"></div>
-        </div>
-
-        <div class="card">
-            <h2>📝 Log Aktivitas</h2>
-            <div id="log-list" style="max-height:200px;overflow-y:auto;"></div>
-        </div>
-
-        <button class="btn btn-gray" onclick="logoutAdmin()">🚪 LOGOUT</button>
+    <!-- IMPORT EXCEL/CSV -->
+    <div class="card">
+      <h2>📊 Import Data Massal</h2>
+      <p style="font-size:12px;color:#777;margin-bottom:10px;">Upload file CSV untuk input data ratusan/ribuan anggota sekaligus</p>
+      <button class="btn btn-outline" onclick="downloadTemplate()">⬇️ Download Template CSV</button>
+      <div class="import-box" onclick="document.getElementById('input-csv').click()">
+        <p>📂 Klik untuk pilih file CSV</p>
+        <small>Format: kta, nama, tglLahir, thnBaiat, noUrut, domisili, alamat</small>
+      </div>
+      <input type="file" id="input-csv" accept=".csv" style="display:none" onchange="importCSV(event)">
+      <div id="hasil-import" class="result"></div>
     </div>
+
+    <!-- KELOLA FOTO -->
+    <div class="card">
+      <h2>📸 Kelola Foto</h2>
+      <input type="number" id="foto-kta" placeholder="Nomor KTA" oninput="limitInput(this,15)">
+      <button class="btn btn-ungu" onclick="cariFoto()">🔍 Cari Anggota</button>
+      <div id="info-foto" style="display:none;text-align:center;">
+        <p id="nama-foto" style="font-weight:700;margin:8px 0;color:var(--ungu);"></p>
+        <div id="preview-foto"><img id="preview-foto-img" src="" alt="foto"></div>
+        <p id="no-foto" style="color:#999;font-size:13px;margin:8px 0;">Belum ada foto</p>
+        <input type="file" id="input-foto" accept="image/*" style="display:none;" onchange="uploadFoto(event)">
+        <button class="btn btn-ungu" style="margin-top:8px;" onclick="document.getElementById('input-foto').click()">🖼️ Pilih Foto dari Galeri</button>
+      </div>
+      <div id="hasil-foto" class="result"></div>
+    </div>
+
+    <!-- HAPUS ANGGOTA -->
+    <div class="card">
+      <h2>🗑️ Hapus Anggota</h2>
+      <input type="number" id="hapus-kta" placeholder="Nomor KTA yang dihapus" oninput="limitInput(this,15)">
+      <button class="btn btn-merah" onclick="hapusAnggota()">🗑️ HAPUS ANGGOTA</button>
+      <div id="hasil-hapus" class="result"></div>
+    </div>
+
+    <!-- GANTI PASSWORD -->
+    <div class="card">
+      <h2>🔑 Ganti Password</h2>
+      <input type="password" id="pass-lama" placeholder="Password Lama">
+      <input type="password" id="pass-baru" placeholder="Password Baru (min 6 karakter)">
+      <input type="password" id="pass-konfirm" placeholder="Konfirmasi Password Baru">
+      <button class="btn btn-ungu" onclick="gantiPassword()">💾 SIMPAN PASSWORD</button>
+      <div id="hasil-pass" class="result"></div>
+    </div>
+
+    <!-- LOG -->
+    <div class="card">
+      <h2>📝 Log Aktivitas</h2>
+      <div id="log-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <button class="btn btn-abu" onclick="logoutAdmin()">🚪 LOGOUT</button>
+  </div>
 </div>
 
 <script>
-// CONFIG EMAILJS
+// ============ CONFIG ============
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywN9W8AJjBKacT9-cYC_KRsWPAwFK0Pd8RAmvF8H1SAExCcXDlzSwBoVHZCtoEIiNZxw/exec";
+const CLOUDINARY_CLOUD = "dtffrjjbb";
+const CLOUDINARY_PRESET = "kta_unsigned";
+
 const EMAILJS_SERVICE  = "service_yt6sjvg";
 const EMAILJS_TEMPLATE = "template_bnuj8uo";
-const EMAILJS_PUBLIC   = "Z7j7Pj2NrNhMcpLnd";
 const GMAIL_ADMIN      = "sangkuriangsakti1966@gmail.com";
 
-// DATABASE
-const DB_KEY    = 'kta_db';
-const ADMIN_KEY = 'kta_admin';
-const LOG_KEY   = 'kta_log';
-const FOTO_KEY  = 'kta_foto';
+const ADMIN_KEY = 'kta_admin_ss';
+const LOG_KEY   = 'kta_log_ss';
 
 let otpTersimpan = "";
 let isAdmin = false;
+let cacheDB = null;
 
-function getDB(){ return JSON.parse(localStorage.getItem(DB_KEY)||'{}'); }
-function saveDB(db){ localStorage.setItem(DB_KEY,JSON.stringify(db)); }
-function getAdmin(){
-    const def={password:hashStr('admin123')};
-    return JSON.parse(localStorage.getItem(ADMIN_KEY)||JSON.stringify(def));
+// ============ ADMIN STORAGE (localStorage) ============
+function getAdmin() {
+  const def = {password: hashStr('admin123')};
+  return JSON.parse(localStorage.getItem(ADMIN_KEY) || JSON.stringify(def));
 }
-function saveAdmin(d){ localStorage.setItem(ADMIN_KEY,JSON.stringify(d)); }
-function getLog(){ return JSON.parse(localStorage.getItem(LOG_KEY)||'[]'); }
-function addLog(p){
-    const log=getLog();
-    const t=new Date().toLocaleString('id-ID');
-    log.unshift('['+t+'] '+p);
-    if(log.length>100)log.pop();
-    localStorage.setItem(LOG_KEY,JSON.stringify(log));
+function saveAdmin(d) { localStorage.setItem(ADMIN_KEY, JSON.stringify(d)); }
+function getLog() { return JSON.parse(localStorage.getItem(LOG_KEY) || '[]'); }
+function addLog(p) {
+  const log = getLog();
+  const t = new Date().toLocaleString('id-ID');
+  log.unshift('[' + t + '] ' + p);
+  if (log.length > 100) log.pop();
+  localStorage.setItem(LOG_KEY, JSON.stringify(log));
 }
-function getFoto(k){ return (JSON.parse(localStorage.getItem(FOTO_KEY)||'{}'))[k]||null; }
-function saveFoto(k,b64){
-    const f=JSON.parse(localStorage.getItem(FOTO_KEY)||'{}');
-    f[k]=b64; localStorage.setItem(FOTO_KEY,JSON.stringify(f));
-}
-function hapusFoto(k){
-    const f=JSON.parse(localStorage.getItem(FOTO_KEY)||'{}');
-    delete f[k]; localStorage.setItem(FOTO_KEY,JSON.stringify(f));
-}
-function hashStr(s){
-    let h=0;
-    for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}
-    return h.toString();
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
+  return h.toString();
 }
 
-// NAVIGASI
-function showPage(p,btn){
-    document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
-    document.getElementById('page-'+p).classList.add('active');
-    if(btn)btn.classList.add('active');
-    if(p==='list')tampilList();
-    if(p==='admin'&&isAdmin)tampilLog();
-}
-function limitInput(el,max){
-    if(el.value.length>max)el.value=el.value.slice(0,max);
-}
-function showResult(id,pesan,tipe){
-    const el=document.getElementById(id);
-    el.className='result '+tipe;
-    el.innerHTML=pesan;
-    el.style.display='block';
-}
-
-// VALIDASI KTA
-function validasiKTA(n){
-    if(n.length!==15)return{valid:false,pesan:'KTA harus 15 digit!'};
-    const tgl=n.substring(0,2),bln=n.substring(2,4),thn=n.substring(4,6);
-    const thnSah=n.substring(6,10),kode=n.substring(10,12),noUrut=n.substring(12,15);
-    if(kode!=='00')return{valid:false,pesan:"Digit 11-12 harus '00'! (kamu: '"+kode+"')"};
-    if(parseInt(tgl)<1||parseInt(tgl)>31)return{valid:false,pesan:'Tanggal tidak valid!'};
-    if(parseInt(bln)<1||parseInt(bln)>12)return{valid:false,pesan:'Bulan tidak valid!'};
-    const thnNow=new Date().getFullYear();
-    if(parseInt(thnSah)<2000||parseInt(thnSah)>thnNow)return{valid:false,pesan:'Tahun tidak valid!'};
-    return{valid:true,tglLahir:tgl+'/'+bln+'/'+thn,thnSah:thnSah,noUrut:noUrut};
-}
-
-// VERIFIKASI KTA
-function verifikasiKTA(){
-    const n=document.getElementById('input-kta').value.trim();
-    const cek=validasiKTA(n);
-    if(!cek.valid){
-        showResult('hasil-cek','❌ VERIFIKASI GAGAL<br>'+cek.pesan,'gagal');
-        document.getElementById('foto-hasil').style.display='none';
-        addLog('Verifikasi: '+n+' - GAGAL FORMAT');
-        return;
-    }
-    const db=getDB();
-    if(db[n]){
-        const data=db[n];
-        const foto=getFoto(n);
-        const img=document.getElementById('foto-hasil');
-        if(foto){img.src=foto;img.style.display='block';}
-        else img.style.display='none';
-        showResult('hasil-cek',
-            '✅ <b>VERIFIKASI BERHASIL!</b><br><br>'+
-            '👤 Nama     : '+data.nama+'<br>'+
-            '📅 Tgl Lahir: '+cek.tglLahir+'<br>'+
-            '📋 Tahun Sah: '+cek.thnSah+'<br>'+
-            '🔢 No. Urut : '+cek.noUrut,
-            'berhasil');
-        addLog('Verifikasi: '+n+' ('+data.nama+') - BERHASIL');
-    } else {
-        document.getElementById('foto-hasil').style.display='none';
-        showResult('hasil-cek','❌ <b>VERIFIKASI GAGAL!</b><br>Tidak terdaftar sebagai anggota.','gagal');
-        addLog('Verifikasi: '+n+' - TIDAK TERDAFTAR');
-    }
-}
-
-// LIST ANGGOTA
-function tampilList(){
-    const db=getDB();
-    const div=document.getElementById('list-anggota');
-    const keys=Object.keys(db);
-    if(!keys.length){div.innerHTML='<p style="color:#999;text-align:center;">Belum ada anggota.</p>';return;}
-    div.innerHTML='';
-    keys.forEach(n=>{
-        const d=db[n],foto=getFoto(n);
-        const fotoHTML=foto
-            ?'<img src="'+foto+'" class="foto-kecil">'
-            :'<div style="width:55px;height:55px;border-radius:50%;background:#e0e0e0;display:flex;align-items:center;justify-content:center;font-size:24px;">👤</div>';
-        div.innerHTML+='<div class="anggota-card">'+fotoHTML+
-            '<div><b>'+d.nama+'</b><br><small>KTA: '+n+'</small><br><small>Lahir: '+d.tglLahir+' | Sah: '+d.thnSah+'</small></div></div>';
-    });
-}
-
-// OTP KE GMAIL
-function kirimOTP(){
-    otpTersimpan=Math.floor(100000+Math.random()*900000).toString();
-    showResult('hasil-login','📤 Mengirim OTP ke Gmail...','info');
-    emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
-        email: GMAIL_ADMIN,
-        passcode: otpTersimpan,
-        time: new Date().toLocaleString('id-ID')
-    }).then(()=>{
-        showResult('hasil-login','✅ OTP berhasil dikirim ke Gmail!<br><small>Cek inbox: '+GMAIL_ADMIN+'</small>','info');
-        addLog('OTP dikirim ke Gmail');
-    }).catch(err=>{
-        showResult('hasil-login','❌ Gagal kirim OTP: '+JSON.stringify(err),'gagal');
-    });
-}
-
-// LOGIN ADMIN
-function loginAdmin(){
-    const admin=getAdmin();
-    const pass=document.getElementById('input-pass').value.trim();
-    const otp=document.getElementById('input-otp').value.trim();
-    if(hashStr(pass)!==admin.password){
-        showResult('hasil-login','❌ Password salah!','gagal');
-        addLog('Login gagal - password salah');
-        return;
-    }
-    if(otpTersimpan&&otp!==otpTersimpan){
-        showResult('hasil-login','❌ OTP salah!','gagal');
-        addLog('Login gagal - OTP salah');
-        return;
-    }
-    isAdmin=true;
-    otpTersimpan='';
-    document.getElementById('form-login').style.display='none';
-    document.getElementById('menu-admin').style.display='block';
-    document.getElementById('input-pass').value='';
-    document.getElementById('input-otp').value='';
+// ============ SESSION ADMIN (tetap login) ============
+function cekSesiAdmin() {
+  const sesi = sessionStorage.getItem('admin_aktif_ss');
+  if (sesi === 'ya') {
+    isAdmin = true;
+    document.getElementById('form-login').style.display = 'none';
+    document.getElementById('menu-admin').style.display = 'block';
     tampilLog();
-    addLog('✅ Login admin BERHASIL');
+  }
 }
 
-function logoutAdmin(){
-    isAdmin=false;
-    document.getElementById('form-login').style.display='block';
-    document.getElementById('menu-admin').style.display='none';
-    addLog('Admin logout');
-}
-
-// TAMBAH ANGGOTA
-function tambahAnggota(){
-    const n=document.getElementById('tambah-kta').value.trim();
-    const nama=document.getElementById('tambah-nama').value.trim();
-    if(!nama){showResult('hasil-tambah','❌ Nama tidak boleh kosong!','gagal');return;}
-    const cek=validasiKTA(n);
-    if(!cek.valid){showResult('hasil-tambah','❌ '+cek.pesan,'gagal');return;}
-    const db=getDB();
-    if(db[n]){showResult('hasil-tambah','⚠️ KTA sudah terdaftar!','gagal');return;}
-    db[n]={nama:nama,tglLahir:cek.tglLahir,thnSah:cek.thnSah,noUrut:cek.noUrut};
-    saveDB(db);
-    showResult('hasil-tambah','✅ '+nama+' berhasil didaftarkan!','berhasil');
-    addLog('✅ Tambah: '+nama+' KTA: '+n);
-    document.getElementById('tambah-kta').value='';
-    document.getElementById('tambah-nama').value='';
-}
-
-// KELOLA FOTO
-function cariFoto(){
-    const n=document.getElementById('foto-kta').value.trim();
-    const db=getDB();
-    if(!db[n]){
-        showResult('hasil-foto','❌ Anggota tidak ditemukan!','gagal');
-        document.getElementById('info-foto').style.display='none';
-        return;
+// ============ NAVIGASI ============
+function showPage(p, btn) {
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-' + p).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (p === 'list') {
+    if (isAdmin) {
+      document.getElementById('list-akses-ditolak').style.display = 'none';
+      document.getElementById('list-konten').style.display = 'block';
+      tampilList();
+    } else {
+      document.getElementById('list-akses-ditolak').style.display = 'block';
+      document.getElementById('list-konten').style.display = 'none';
     }
-    document.getElementById('nama-foto').textContent=db[n].nama;
-    const foto=getFoto(n);
-    const prev=document.getElementById('preview-foto');
-    if(foto){prev.src=foto;prev.style.display='block';document.getElementById('no-foto').style.display='none';}
-    else{prev.style.display='none';document.getElementById('no-foto').style.display='block';}
-    document.getElementById('info-foto').style.display='block';
-    document.getElementById('hasil-foto').style.display='none';
+  }
+  if (p === 'admin' && isAdmin) tampilLog();
+}
+function limitInput(el, max) {
+  if (el.value.length > max) el.value = el.value.slice(0, max);
+}
+function showResult(id, pesan, tipe) {
+  const el = document.getElementById(id);
+  el.className = 'result ' + tipe;
+  el.innerHTML = pesan;
+  el.style.display = 'block';
 }
 
-function uploadFoto(e){
-    const n=document.getElementById('foto-kta').value.trim();
-    const file=e.target.files[0];
-    if(!file||!n)return;
-    const reader=new FileReader();
-    reader.onload=function(ev){
-        saveFoto(n,ev.target.result);
-        const prev=document.getElementById('preview-foto');
-        prev.src=ev.target.result;prev.style.display='block';
-        document.getElementById('no-foto').style.display='none';
-        showResult('hasil-foto','✅ Foto berhasil disimpan!','berhasil');
-        addLog('📸 Foto update KTA: '+n);
-    };
-    reader.readAsDataURL(file);
+// ============ AMBIL DATA DARI GOOGLE SHEETS ============
+async function getDB(forceRefresh) {
+  if (cacheDB && !forceRefresh) return cacheDB;
+  try {
+    const res = await fetch(APPS_SCRIPT_URL);
+    const json = await res.json();
+    cacheDB = {};
+    if (json.data) {
+      json.data.forEach(row => {
+        if (row.kta) cacheDB[row.kta.toString()] = row;
+      });
+    }
+    return cacheDB;
+  } catch(e) {
+    return {};
+  }
 }
 
-// HAPUS ANGGOTA
-function hapusAnggota(){
-    const n=document.getElementById('hapus-kta').value.trim();
-    const db=getDB();
-    if(!db[n]){showResult('hasil-hapus','❌ KTA tidak ditemukan!','gagal');return;}
-    const nama=db[n].nama;
-    if(!confirm('Hapus anggota '+nama+'?'))return;
-    delete db[n];saveDB(db);hapusFoto(n);
-    showResult('hasil-hapus','✅ '+nama+' berhasil dihapus!','berhasil');
-    addLog('🗑️ Hapus: '+nama+' KTA: '+n);
-    document.getElementById('hapus-kta').value='';
+async function postDB(data) {
+  const res = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  });
+  return await res.json();
 }
 
-// GANTI PASSWORD
-function gantiPassword(){
-    const admin=getAdmin();
-    const lama=document.getElementById('pass-lama').value.trim();
-    const baru=document.getElementById('pass-baru').value.trim();
-    const konfirm=document.getElementById('pass-konfirm').value.trim();
-    if(hashStr(lama)!==admin.password){showResult('hasil-pass','❌ Password lama salah!','gagal');return;}
-    if(baru!==konfirm){showResult('hasil-pass','❌ Password tidak cocok!','gagal');return;}
-    if(baru.length<6){showResult('hasil-pass','❌ Password minimal 6 karakter!','gagal');return;}
-    admin.password=hashStr(baru);saveAdmin(admin);
-    showResult('hasil-pass','✅ Password berhasil diganti!','berhasil');
-    addLog('🔑 Password diganti');
-    document.getElementById('pass-lama').value='';
-    document.getElementById('pass-baru').value='';
-    document.getElementById('pass-konfirm').value='';
+// ============ VALIDASI KTA ============
+function validasiKTA(n) {
+  if (n.length !== 15) return {valid: false, pesan: 'KTA harus 15 digit!'};
+  const tgl = n.substring(0,2), bln = n.substring(2,4), thn = n.substring(4,6);
+  const thnSah = n.substring(6,10), kode = n.substring(10,12), noUrut = n.substring(12,15);
+  if (kode !== '00') return {valid: false, pesan: "Digit 11-12 harus '00'!"};
+  if (parseInt(tgl)<1||parseInt(tgl)>31) return {valid: false, pesan: 'Tanggal tidak valid!'};
+  if (parseInt(bln)<1||parseInt(bln)>12) return {valid: false, pesan: 'Bulan tidak valid!'};
+  return {valid: true, tglLahir: tgl+'/'+bln+'/'+thn, thnSah: thnSah, noUrut: noUrut};
 }
 
-// LOG
-function tampilLog(){
-    const log=getLog();
-    const div=document.getElementById('log-list');
-    if(!log.length){div.innerHTML='<p style="color:#999;font-size:12px;">Belum ada log.</p>';return;}
-    div.innerHTML=log.map(l=>'<div class="log-item">'+l+'</div>').join('');
+// ============ VERIFIKASI KTA ============
+async function verifikasiKTA() {
+  const n = document.getElementById('input-kta').value.trim();
+  const cek = validasiKTA(n);
+  document.getElementById('kta-digital').style.display = 'none';
+  document.getElementById('hasil-cek').style.display = 'none';
+
+  if (!cek.valid) {
+    showResult('hasil-cek', '❌ GAGAL: ' + cek.pesan, 'gagal');
+    addLog('Verifikasi: ' + n + ' - GAGAL FORMAT');
+    return;
+  }
+
+  showResult('hasil-cek', '<div class="loading"><div class="spinner"></div><br>Memeriksa data...</div>', 'info');
+
+  const db = await getDB();
+  if (db[n]) {
+    const data = db[n];
+    document.getElementById('hasil-cek').style.display = 'none';
+
+    // Isi KTA digital
+    document.getElementById('kta-nama-hasil').textContent = data.nama || '-';
+    document.getElementById('kta-tgl-hasil').textContent = data.tglLahir || cek.tglLahir;
+    document.getElementById('kta-baiat-hasil').textContent = data.thnBaiat || cek.thnSah;
+    document.getElementById('kta-domisili-hasil').textContent = data.domisili || '-';
+    document.getElementById('kta-alamat-hasil').textContent = data.alamat || '-';
+    document.getElementById('kta-nomor-hasil').textContent = n;
+
+    // Foto
+    const hexEl = document.getElementById('kta-foto-hex');
+    if (data.foto && data.foto.startsWith('http')) {
+      hexEl.innerHTML = '<img src="' + data.foto + '" alt="foto">';
+    } else {
+      hexEl.innerHTML = '<span class="no-foto">👤</span>';
+    }
+
+    document.getElementById('kta-digital').style.display = 'block';
+    addLog('Verifikasi: ' + n + ' (' + data.nama + ') - BERHASIL');
+  } else {
+    showResult('hasil-cek', '❌ <b>TIDAK TERDAFTAR</b><br>Nomor KTA tidak ditemukan dalam database.', 'gagal');
+    addLog('Verifikasi: ' + n + ' - TIDAK TERDAFTAR');
+  }
 }
+
+// ============ LIST ANGGOTA ============
+async function tampilList() {
+  document.getElementById('list-anggota').innerHTML = '<div class="loading"><div class="spinner"></div><br>Memuat data anggota...</div>';
+  const db = await getDB(true);
+  const keys = Object.keys(db);
+  const div = document.getElementById('list-anggota');
+  if (!keys.length) {
+    div.innerHTML = '<p style="color:#999;text-align:center;padding:20px;">Belum ada anggota.</p>';
+    return;
+  }
+  div.innerHTML = '';
+  keys.forEach(n => {
+    const d = db[n];
+    const fotoHTML = (d.foto && d.foto.startsWith('http'))
+      ? '<div class="foto-hex-kecil"><img src="' + d.foto + '" alt="foto"></div>'
+      : '<div class="foto-hex-kecil"><span class="emoji">👤</span></div>';
+    div.innerHTML += '<div class="anggota-card">' + fotoHTML +
+      '<div><div class="anggota-nama">' + (d.nama||'-') + '</div>' +
+      '<div class="anggota-info">KTA: ' + n + '</div>' +
+      '<div class="anggota-info">Lahir: ' + (d.tglLahir||'-') + ' | Baiat: ' + (d.thnBaiat||'-') + '</div>' +
+      '<div class="anggota-info">📍 ' + (d.domisili||'-') + '</div></div></div>';
+  });
+}
+
+// ============ OTP ============
+function kirimOTP() {
+  otpTersimpan = Math.floor(100000 + Math.random() * 900000).toString();
+  showResult('hasil-login', '📤 Mengirim OTP ke Gmail...', 'info');
+  emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+    email: GMAIL_ADMIN,
+    passcode: otpTersimpan,
+    time: new Date().toLocaleString('id-ID')
+  }).then(() => {
+    showResult('hasil-login', '✅ OTP berhasil dikirim!<br><small>Cek inbox: ' + GMAIL_ADMIN + '</small>', 'info');
+    addLog('OTP dikirim ke Gmail');
+  }).catch(err => {
+    showResult('hasil-login', '❌ Gagal kirim OTP: ' + JSON.stringify(err), 'gagal');
+  });
+}
+
+// ============ LOGIN ADMIN ============
+function loginAdmin() {
+  const admin = getAdmin();
+  const pass = document.getElementById('input-pass').value.trim();
+  const otp = document.getElementById('input-otp').value.trim();
+  if (hashStr(pass) !== admin.password) {
+    showResult('hasil-login', '❌ Password salah!', 'gagal');
+    addLog('Login gagal - password salah');
+    return;
+  }
+  if (otpTersimpan && otp !== otpTersimpan) {
+    showResult('hasil-login', '❌ OTP salah!', 'gagal');
+    addLog('Login gagal - OTP salah');
+    return;
+  }
+  isAdmin = true;
+  otpTersimpan = '';
+  sessionStorage.setItem('admin_aktif_ss', 'ya');
+  document.getElementById('form-login').style.display = 'none';
+  document.getElementById('menu-admin').style.display = 'block';
+  document.getElementById('input-pass').value = '';
+  document.getElementById('input-otp').value = '';
+  tampilLog();
+  addLog('✅ Login admin BERHASIL');
+}
+
+function logoutAdmin() {
+  isAdmin = false;
+  sessionStorage.removeItem('admin_aktif_ss');
+  document.getElementById('form-login').style.display = 'block';
+  document.getElementById('menu-admin').style.display = 'none';
+  addLog('Admin logout');
+}
+
+// ============ TAMBAH ANGGOTA ============
+async function tambahAnggota() {
+  const n = document.getElementById('tambah-kta').value.trim();
+  const nama = document.getElementById('tambah-nama').value.trim();
+  const tgl = document.getElementById('tambah-tgl').value.trim();
+  const baiat = document.getElementById('tambah-baiat').value.trim();
+  const domisili = document.getElementById('tambah-domisili').value.trim();
+  const alamat = document.getElementById('tambah-alamat').value.trim();
+
+  if (!nama) { showResult('hasil-tambah', '❌ Nama tidak boleh kosong!', 'gagal'); return; }
+  if (n.length !== 15) { showResult('hasil-tambah', '❌ KTA harus 15 digit!', 'gagal'); return; }
+
+  const cek = validasiKTA(n);
+  if (!cek.valid) { showResult('hasil-tambah', '❌ ' + cek.pesan, 'gagal'); return; }
+
+  showResult('hasil-tambah', '<div class="loading"><div class="spinner"></div><br>Menyimpan...</div>', 'info');
+
+  const db = await getDB();
+  if (db[n]) { showResult('hasil-tambah', '⚠️ KTA sudah terdaftar!', 'gagal'); return; }
+
+  const res = await postDB({
+    action: 'tambah',
+    kta: n,
+    nama: nama,
+    tglLahir: tgl || cek.tglLahir,
+    thnBaiat: baiat || cek.thnSah,
+    noUrut: cek.noUrut,
+    domisili: domisili,
+    alamat: alamat,
+    foto: ''
+  });
+
+  if (res.status === 'ok') {
+    cacheDB = null;
+    showResult('hasil-tambah', '✅ ' + nama + ' berhasil didaftarkan!', 'berhasil');
+    addLog('✅ Tambah: ' + nama + ' KTA: ' + n);
+    document.getElementById('tambah-kta').value = '';
+    document.getElementById('tambah-nama').value = '';
+    document.getElementById('tambah-tgl').value = '';
+    document.getElementById('tambah-baiat').value = '';
+    document.getElementById('tambah-domisili').value = '';
+    document.getElementById('tambah-alamat').value = '';
+  } else {
+    showResult('hasil-tambah', '❌ Gagal menyimpan!', 'gagal');
+  }
+}
+
+// ============ IMPORT CSV ============
+function downloadTemplate() {
+  const csv = 'kta,nama,tglLahir,thnBaiat,noUrut,domisili,alamat\n311210202400154,KELVIN SEBASTYAN,31/12/10,2024,154,Way Kanan,Desa Negeri Jaya Kec. Negeri Besar';
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'template_anggota_kta.csv';
+  a.click();
+}
+
+function importCSV(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  showResult('hasil-import', '<div class="loading"><div class="spinner"></div><br>Membaca file...</div>', 'info');
+  const reader = new FileReader();
+  reader.onload = async function(ev) {
+    const lines = ev.target.result.split('\n').filter(l => l.trim());
+    const headers = lines[0].split(',').map(h => h.trim());
+    let sukses = 0, gagal = 0;
+    showResult('hasil-import', '⏳ Mengupload ' + (lines.length-1) + ' data...', 'info');
+    for (let i = 1; i < lines.length; i++) {
+      const cols = lines[i].split(',').map(c => c.trim().replace(/"/g,''));
+      const row = {};
+      headers.forEach((h, idx) => row[h] = cols[idx] || '');
+      if (!row.kta || row.kta.length !== 15) { gagal++; continue; }
+      try {
+        const res = await postDB({ action: 'tambah', ...row, foto: row.foto || '' });
+        if (res.status === 'ok') sukses++;
+        else gagal++;
+      } catch(err) { gagal++; }
+    }
+    cacheDB = null;
+    showResult('hasil-import', '✅ Import selesai!<br>Berhasil: <b>' + sukses + '</b> | Gagal: <b>' + gagal + '</b>', sukses > 0 ? 'berhasil' : 'gagal');
+    addLog('📊 Import CSV: ' + sukses + ' berhasil, ' + gagal + ' gagal');
+  };
+  reader.readAsText(file);
+}
+
+// ============ KELOLA FOTO ============
+async function cariFoto() {
+  const n = document.getElementById('foto-kta').value.trim();
+  const db = await getDB();
+  if (!db[n]) {
+    showResult('hasil-foto', '❌ Anggota tidak ditemukan!', 'gagal');
+    document.getElementById('info-foto').style.display = 'none';
+    return;
+  }
+  document.getElementById('nama-foto').textContent = db[n].nama;
+  const foto = db[n].foto;
+  const prev = document.getElementById('preview-foto');
+  const prevImg = document.getElementById('preview-foto-img');
+  if (foto && foto.startsWith('http')) {
+    prevImg.src = foto;
+    prev.style.display = 'block';
+    document.getElementById('no-foto').style.display = 'none';
+  } else {
+    prev.style.display = 'none';
+    document.getElementById('no-foto').style.display = 'block';
+  }
+  document.getElementById('info-foto').style.display = 'block';
+  document.getElementById('hasil-foto').style.display = 'none';
+}
+
+async function uploadFoto(e) {
+  const n = document.getElementById('foto-kta').value.trim();
+  const file = e.target.files[0];
+  if (!file || !n) return;
+  showResult('hasil-foto', '⏳ Mengupload foto ke Cloudinary...', 'info');
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_PRESET);
+
+  try {
+    const res = await fetch('https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD + '/image/upload', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    const fotoURL = data.secure_url;
+
+    // Update ke Google Sheets
+    const upd = await postDB({ action: 'updateFoto', kta: n, foto: fotoURL });
+    if (upd.status === 'ok') {
+      cacheDB = null;
+      const prev = document.getElementById('preview-foto');
+      const prevImg = document.getElementById('preview-foto-img');
+      prevImg.src = fotoURL;
+      prev.style.display = 'block';
+      document.getElementById('no-foto').style.display = 'none';
+      showResult('hasil-foto', '✅ Foto berhasil disimpan!', 'berhasil');
+      addLog('📸 Foto update KTA: ' + n);
+    } else {
+      showResult('hasil-foto', '❌ Gagal update foto di database!', 'gagal');
+    }
+  } catch(err) {
+    showResult('hasil-foto', '❌ Gagal upload foto: ' + err.message, 'gagal');
+  }
+}
+
+// ============ HAPUS ANGGOTA ============
+async function hapusAnggota() {
+  const n = document.getElementById('hapus-kta').value.trim();
+  const db = await getDB();
+  if (!db[n]) { showResult('hasil-hapus', '❌ KTA tidak ditemukan!', 'gagal'); return; }
+  const nama = db[n].nama;
+  if (!confirm('Hapus anggota ' + nama + '?')) return;
+  showResult('hasil-hapus', '<div class="loading"><div class="spinner"></div><br>Menghapus...</div>', 'info');
+  const res = await postDB({ action: 'hapus', kta: n });
+  if (res.status === 'ok') {
+    cacheDB = null;
+    showResult('hasil-hapus', '✅ ' + nama + ' berhasil dihapus!', 'berhasil');
+    addLog('🗑️ Hapus: ' + nama + ' KTA: ' + n);
+    document.getElementById('hapus-kta').value = '';
+  } else {
+    showResult('hasil-hapus', '❌ Gagal menghapus!', 'gagal');
+  }
+}
+
+// ============ GANTI PASSWORD ============
+function gantiPassword() {
+  const admin = getAdmin();
+  const lama = document.getElementById('pass-lama').value.trim();
+  const baru = document.getElementById('pass-baru').value.trim();
+  const konfirm = document.getElementById('pass-konfirm').value.trim();
+  if (hashStr(lama) !== admin.password) { showResult('hasil-pass', '❌ Password lama salah!', 'gagal'); return; }
+  if (baru !== konfirm) { showResult('hasil-pass', '❌ Password tidak cocok!', 'gagal'); return; }
+  if (baru.length < 6) { showResult('hasil-pass', '❌ Password minimal 6 karakter!', 'gagal'); return; }
+  admin.password = hashStr(baru);
+  saveAdmin(admin);
+  showResult('hasil-pass', '✅ Password berhasil diganti!', 'berhasil');
+  addLog('🔑 Password diganti');
+  document.getElementById('pass-lama').value = '';
+  document.getElementById('pass-baru').value = '';
+  document.getElementById('pass-konfirm').value = '';
+}
+
+// ============ LOG ============
+function tampilLog() {
+  const log = getLog();
+  const div = document.getElementById('log-list');
+  if (!log.length) { div.innerHTML = '<p style="color:#999;font-size:12px;padding:8px;">Belum ada log.</p>'; return; }
+  div.innerHTML = log.map(l => '<div class="log-item">' + l + '</div>').join('');
+}
+
+// ============ INIT ============
+cekSesiAdmin();
 </script>
 </body>
 </html>
