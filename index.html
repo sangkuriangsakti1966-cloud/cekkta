@@ -495,7 +495,7 @@ input:focus, select:focus, textarea:focus {
 <div id="page-cek" class="page active">
   <div class="card">
     <h2>🔍 Verifikasi KTA</h2>
-    <input type="number" id="input-kta" placeholder="Masukkan 15 digit nomor KTA" oninput="limitInput(this,15)">
+    <input type="text" inputmode="numeric" pattern="[0-9]*" id="input-kta" placeholder="Masukkan 15 digit nomor KTA" oninput="this.value=this.value.replace(/[^0-9]/g,'');limitInput(this,15)">
     <button class="btn btn-ungu" onclick="verifikasiKTA()">🔍 VERIFIKASI SEKARANG</button>
     <div id="hasil-cek" class="result"></div>
     <!-- KTA DIGITAL -->
@@ -560,7 +560,7 @@ input:focus, select:focus, textarea:focus {
     <!-- TAMBAH ANGGOTA -->
     <div class="card">
       <h2>➕ Tambah Anggota</h2>
-      <input type="number" id="tambah-kta" placeholder="Nomor KTA (15 digit)" oninput="limitInput(this,15)">
+      <input type="text" inputmode="numeric" pattern="[0-9]*" id="tambah-kta" placeholder="Nomor KTA (15 digit)" oninput="this.value=this.value.replace(/[^0-9]/g,'');limitInput(this,15)">
       <input type="text" id="tambah-nama" placeholder="Nama Lengkap">
       <input type="text" id="tambah-tgl" placeholder="Tanggal Lahir (DD/MM/YY) contoh: 28/02/10">
       <input type="number" id="tambah-baiat" placeholder="Tahun Baiat (contoh: 2024)" oninput="limitInput(this,4)">
@@ -586,7 +586,7 @@ input:focus, select:focus, textarea:focus {
     <!-- KELOLA FOTO -->
     <div class="card">
       <h2>📸 Kelola Foto</h2>
-      <input type="number" id="foto-kta" placeholder="Nomor KTA" oninput="limitInput(this,15)">
+      <input type="text" inputmode="numeric" pattern="[0-9]*" id="foto-kta" placeholder="Nomor KTA" oninput="this.value=this.value.replace(/[^0-9]/g,'');limitInput(this,15)">
       <button class="btn btn-ungu" onclick="cariFoto()">🔍 Cari Anggota</button>
       <div id="info-foto" style="display:none;text-align:center;">
         <p id="nama-foto" style="font-weight:700;margin:8px 0;color:var(--ungu);"></p>
@@ -601,7 +601,7 @@ input:focus, select:focus, textarea:focus {
     <!-- HAPUS ANGGOTA -->
     <div class="card">
       <h2>🗑️ Hapus Anggota</h2>
-      <input type="number" id="hapus-kta" placeholder="Nomor KTA yang dihapus" oninput="limitInput(this,15)">
+      <input type="text" inputmode="numeric" pattern="[0-9]*" id="hapus-kta" placeholder="Nomor KTA yang dihapus" oninput="this.value=this.value.replace(/[^0-9]/g,'');limitInput(this,15)">
       <button class="btn btn-merah" onclick="hapusAnggota()">🗑️ HAPUS ANGGOTA</button>
       <div id="hasil-hapus" class="result"></div>
     </div>
