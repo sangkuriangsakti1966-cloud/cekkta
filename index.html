@@ -300,6 +300,15 @@ input:focus, select:focus, textarea:focus {
 .kta-foto-wrap {
   flex-shrink: 0;
 }
+.kta-foto-hex-wrap {
+  width: 88px;
+  height: 88px;
+  background: #111;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .kta-foto-hex {
   width: 80px;
   height: 80px;
@@ -309,7 +318,6 @@ input:focus, select:focus, textarea:focus {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 2px solid var(--kuning);
 }
 .kta-foto-hex img {
   width: 100%;
@@ -711,7 +719,11 @@ async function getDB(forceRefresh) {
     cacheDB = {};
     if (json.data) {
       json.data.forEach(row => {
-        if (row.kta) cacheDB[row.kta.toString()] = row;
+        if (row.kta) {
+          const ktaKey = row.kta.toString().replace(/^[`'"]/g,'');
+          row.kta = ktaKey;
+          cacheDB[ktaKey] = row;
+        }
       });
     }
     return cacheDB;
